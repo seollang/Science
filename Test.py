@@ -5,6 +5,7 @@ import math
 
 st.title("🔥 온도 & 농도에 따른 반응 속도 시뮬레이터")
 
+# 실제 물질 예시 데이터
 reactants = {
     "과산화수소 (Hydrogen Peroxide, H₂O₂)": {"A": 1.2e7, "Ea": 75000},
     "아세트산 (Acetic Acid, CH₃COOH)": {"A": 3.5e9, "Ea": 92000},
@@ -13,11 +14,11 @@ reactants = {
 
 reactant_name = st.selectbox("반응물 선택", list(reactants.keys()))
 
-temperature = st.slider("온도 설정 (℃)", 0, 150, 25)  # 최대 150도까지 확대
-concentration = st.slider("반응물 농도 (mol/L)", 0.1, 5.0, 1.0, step=0.1)  # 최대 농도 5mol/L로 확대
+temperature = st.slider("온도 설정 (℃)", 0, 150, 25)
+concentration = st.slider("반응물 농도 (mol/L)", 0.1, 5.0, 1.0, step=0.1)
 
-R = 8.314  
-reaction_order = 1  
+R = 8.314  # 기체 상수 (J/mol·K)
+reaction_order = 1  # 1차 반응 가정
 
 A_factor = reactants[reactant_name]["A"]
 Ea = reactants[reactant_name]["Ea"]
@@ -36,11 +37,11 @@ reaction_time = 1 / rate_now if rate_now != 0 else float('inf')
 st.markdown(f"### ✅ 현재 조건 (반응물: **{reactant_name}**)")
 st.write(f"🌡️ 온도: **{temperature} ℃**")
 st.write(f"🧪 농도: **{concentration:.2f} mol/L**")
-st.write(f"⚙️ 반응 속도 상수 k: `{k_now:.5e}`")
+st.write(f"⚙️ 반응 속도 상수 k: `{k_now:.5e} s⁻¹`")
 st.write(f"⚡ 반응 속도 (Rate): `{rate_now:.3f} mol/(L·s)`")
 st.write(f"⏱️ 예측 반응 시간: `{reaction_time:.3f} 초`")
 
-temps = np.arange(0, 151, 1)  # 온도 범위 0~150도
+temps = np.arange(0, 151, 1)
 k_values = [rate_constant(t) for t in temps]
 rates = [reaction_rate(k, concentration) for k in k_values]
 
