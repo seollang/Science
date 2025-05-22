@@ -1,6 +1,18 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
+import platform
+
+# ✅ 한글 폰트 설정
+if platform.system() == 'Windows':
+    matplotlib.rc('font', family='Malgun Gothic')
+elif platform.system() == 'Darwin':
+    matplotlib.rc('font', family='AppleGothic')
+else:
+    matplotlib.rc('font', family='NanumGothic')
+
+matplotlib.rcParams['axes.unicode_minus'] = False
 import math
 
 st.title("🔥 온도 & 농도에 따른 반응 속도 시뮬레이터")
